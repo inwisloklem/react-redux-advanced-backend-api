@@ -5,9 +5,9 @@ const morgan = require('morgan')
 const router = require('./router')
 
 const app = express()
-router(app)
 app.use(morgan('dev'))
 app.use(bodyParser.json({ type: '*/*' }))
+router(app)
 
 const server = http.createServer(app)
 const port = process.env.PORT || 4000
