@@ -4,6 +4,12 @@ module.exports = {
   async signup (req, res, next) {
     const { email, password } = req.body
 
+    if (!email || !password) {
+      return res
+        .status(422)
+        .send({ error: 'E-mail and password should be provided.' })
+    }
+
     try {
       if (await User.findOne({ email })) {
         return res.status(422).send({ error: 'E-mail is in use.' })
