@@ -1,4 +1,10 @@
+const jwt = require('jwt-simple')
+const { secret } = require('../config')
 const User = require('../models/user')
+
+function makeToken (user) {
+  return jwt.encode({ sub: user._id, iat: Date.now() }, secret)
+}
 
 module.exports = {
   async signup (req, res, next) {
@@ -25,7 +31,7 @@ module.exports = {
 
     try {
       await user.save()
-      res.json({ success: true })
+      res.json({ token: makeToken(user) })
     } catch (err) {
       return next(err)
     }
