@@ -31,9 +31,14 @@ module.exports = {
 
     try {
       await user.save()
-      res.json({ token: makeToken(user) })
     } catch (err) {
       return next(err)
     }
+
+    res.json({ token: makeToken(user) })
+  },
+  signin (req, res) {
+    const { user } = req
+    res.json({ token: makeToken(user) })
   }
 }
